@@ -11,6 +11,7 @@ export default function Home() {
   const [selectedLang, setSelectedLang] = useState("en");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showWelcome, setShowWelcome] = useState(true);
 
   // Log availability of Chrome AI APIs
   useEffect(() => {
@@ -26,6 +27,11 @@ export default function Home() {
     if (!text.trim()) {
       setError("Please enter some text.");
       return;
+    }
+
+    // Hide the welcome message when input is sent
+    if (showWelcome) {
+      setShowWelcome(false);
     }
 
     setError("");
@@ -82,13 +88,15 @@ export default function Home() {
 
   return (
     <main className={styles.container}>
-      {/* Welcome Message Section */}
-      <div className={styles.welcomeSection}>
-        <h1 className={styles.welcomeTitle}>Welcome to AI Text Assistant!</h1>
-        <p className={styles.welcomeSubtitle}>
-          Detect languages, summarize text, and translate instantly with AI.
-        </p>
-      </div>
+      {/* Welcome Message Section with fade-out animation */}
+      {showWelcome && (
+        <div className={styles.welcomeSection}>
+          <h1 className={styles.welcomeTitle}>Welcome to AI Text Assistant!</h1>
+          <p className={styles.welcomeSubtitle}>
+            Detect languages, summarize text, and translate instantly with AI.
+          </p>
+        </div>
+      )}
 
       {/* Message Display */}
       <div className={styles.messagesContainer}>
@@ -112,6 +120,9 @@ export default function Home() {
         error={error}
         setError={setError}
         isLoading={isLoading}
+        onTyping={() => {
+          if (showWelcome) setShowWelcome(false);
+        }}
       />
     </main>
   );
