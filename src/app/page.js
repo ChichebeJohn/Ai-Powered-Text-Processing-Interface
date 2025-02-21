@@ -1,3 +1,4 @@
+// page.js
 "use client";
 import { useState, useEffect } from "react";
 import { FaPaperPlane, FaSpinner } from "react-icons/fa";
@@ -12,8 +13,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // (Optional) Check for Chrome AI availability for summarization & translation.
-  // This useEffect logs whether window.ai exists.
+  // Log availability of Chrome AI APIs
   useEffect(() => {
     if (typeof window.ai !== "undefined") {
       console.log("✅ Chrome AI APIs are available.");
@@ -22,7 +22,7 @@ export default function Home() {
     }
   }, []);
 
-  // Handles user input and AI response
+  // Handles user input and AI responses
   const handleSend = async (text) => {
     if (!text.trim()) {
       setError("Please enter some text.");
@@ -42,7 +42,7 @@ export default function Home() {
     setMessages((prev) => [...prev, newMessage]);
 
     try {
-      // Use external API for language detection
+      // Use Chrome's Language Detection API
       const detectedLang = await detectLanguage(newMessage.text);
       if (!detectedLang) throw new Error("Language detection failed.");
 
@@ -54,19 +54,17 @@ export default function Home() {
         )
       );
 
-      // If the detected language differs from the selected language, auto-translate.
+      // Auto-translate if the detected language differs from the selected language
       if (detectedLang !== selectedLang) {
         const translation = await translateText(newMessage.text, selectedLang);
         setMessages((prev) =>
           prev.map((msg) =>
-            msg.id === newMessage.id
-              ? { ...msg, translation, isLoading: false }
-              : msg
+            msg.id === newMessage.id ? { ...msg, translation, isLoading: false } : msg
           )
         );
       }
 
-      // If the text is long and in English, auto-summarize.
+      // Auto-summarize if the text is long and in English
       if (detectedLang === "en" && newMessage.text.length >= 150) {
         const summary = await summarizeText(newMessage.text);
         setMessages((prev) =>
@@ -92,9 +90,10 @@ export default function Home() {
             message={msg}
             selectedLang={selectedLang}
             setSelectedLang={setSelectedLang}
-            isLoading={msg.isLoading}
+            isLoading={isLoading}
             setIsLoading={setIsLoading}
             setError={setError}
+            setMessages={setMessages}
           />
         ))}
       </div>

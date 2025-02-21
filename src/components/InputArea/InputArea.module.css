@@ -1,98 +1,95 @@
+/* InputArea.module.css */
+
 .inputArea {
-    padding: 1rem;
-    background: white;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
-    position: sticky;
-    bottom: 0;
+  padding: 1rem;
+  background: #f9f9f9;
+  border-top: 1px solid #ddd;
+  position: sticky;
+  bottom: 0;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.errorMessage {
+  color: #e74c3c;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  background-color: #fdecea;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  padding: 0.5rem;
+}
+
+.inputGroup {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.textarea {
+  flex: 1;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.25);
+}
+
+.button {
+  background: linear-gradient(45deg, #3498db, #2980b9);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+.button:hover {
+  background: linear-gradient(45deg, #2980b9, #1c5980);
+}
+
+.button:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+}
+
+.button:focus {
+  outline: 2px solid #2980b9;
+  outline-offset: 2px;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
   }
-  
-  .errorMessage {
-    color: #dc3545;
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-    padding: 0.5rem;
-    background-color: #f8d7da;
-    border-radius: 4px;
-    border: 1px solid #f5c6cb;
+  to {
+    transform: rotate(360deg);
   }
-  
+}
+
+@media (max-width: 768px) {
   .inputGroup {
-    display: flex;
-    gap: 0.5rem;
-    align-items: flex-end;
+    flex-direction: column;
   }
-  
-  .textarea {
-    flex: 1;
-    padding: 0.8rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    resize: vertical;
-    min-height: 60px;
-    font-family: inherit;
-    font-size: 1rem;
-    line-height: 1.5;
-  }
-  
-  .textarea:focus {
-    outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
-  }
-  
   .button {
-    padding: 0.75rem 1.25rem;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 42px;
-    transition: background-color 0.2s;
+    width: 100%;
+    padding: 0.8rem;
   }
-  
-  .button:hover {
-    background-color: #0056b3;
+  .textarea {
+    width: 100%;
   }
-  
-  .button:disabled {
-    background: #6c757d;
-    cursor: not-allowed;
-  }
-  
-  .button:focus {
-    outline: 2px solid #0056b3;
-    outline-offset: 2px;
-  }
-  
-  .spin {
-    animation: spin 1s linear infinite;
-  }
-  
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .inputGroup {
-      flex-direction: column;
-    }
-    .button {
-      width: 100%;
-      height: auto;
-      padding: 0.8rem;
-    }
-    .textarea {
-      width: 100%;
-      min-height: 80px;
-    }
-  }
-  
+}

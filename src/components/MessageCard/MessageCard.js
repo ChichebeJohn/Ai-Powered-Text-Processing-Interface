@@ -1,5 +1,7 @@
+// MessageCard.js
 "use client";
 import { FaSpinner } from "react-icons/fa";
+import { summarizeText, translateText } from "../../lib/api";
 import styles from "./MessageCard.module.css";
 
 const LANGUAGES = [
@@ -18,7 +20,6 @@ export default function MessageCard({
   isLoading,
   setIsLoading,
   setError,
-  // setMessages should be passed in props if used inside this component
   setMessages,
 }) {
   const handleSummarize = async () => {
@@ -65,11 +66,7 @@ export default function MessageCard({
             disabled={isLoading}
             aria-label="Summarize"
           >
-            {isLoading ? (
-              <FaSpinner className={styles.spin} />
-            ) : (
-              "Summarize"
-            )}
+            {isLoading ? <FaSpinner className={styles.spin} /> : "Summarize"}
           </button>
         )}
         <div className={styles.translateGroup}>
@@ -91,11 +88,7 @@ export default function MessageCard({
             disabled={isLoading}
             aria-label="Translate"
           >
-            {isLoading ? (
-              <FaSpinner className={styles.spin} />
-            ) : (
-              "Translate"
-            )}
+            {isLoading ? <FaSpinner className={styles.spin} /> : "Translate"}
           </button>
         </div>
       </div>

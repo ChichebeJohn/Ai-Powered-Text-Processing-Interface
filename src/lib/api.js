@@ -1,7 +1,4 @@
-import DetectLanguage from "detectlanguage";
-
-// Initialize the DetectLanguage client with your API key.
-const detectLanguageClient = new DetectLanguage("f40cd2d2e5306faf57ba0ac82ae17741");
+// api.js
 
 export const detectLanguage = async (text) => {
   if (!text || typeof text !== "string") {
@@ -9,18 +6,25 @@ export const detectLanguage = async (text) => {
     return null;
   }
   
-  try {
-    const result = await detectLanguageClient.detect(text);
-    console.log("✅ Language Detection Result:", result);
-    
-    if (!result || result.length === 0) {
-      console.warn("⚠️ No language detected.");
+  if (
+    window.ai &&
+    window.ai.languageDetection &&
+    typeof window.ai.languageDetection.detect === "function"
+  ) {
+    try {
+      const result = await window.ai.languageDetection.detect(text);
+      console.log("✅ Language Detection Result:", result);
+      if (!result || result.length === 0) {
+        console.warn("⚠️ No language detected.");
+        return null;
+      }
+      return result[0].language;
+    } catch (error) {
+      console.error("❌ Error in detectLanguage:", error);
       return null;
     }
-    
-    return result[0].language;
-  } catch (error) {
-    console.error("❌ Error in detectLanguage:", error);
+  } else {
+    console.error("❌ Chrome AI Language Detection API is unavailable.");
     return null;
   }
 };
@@ -31,8 +35,12 @@ export const summarizeText = async (text) => {
     return null;
   }
 
-  if (!window.ai?.summarizer?.summarize) {
-    console.error("❌ AI API for text summarization is unavailable.");
+  if (
+    !window.ai ||
+    !window.ai.summarizer ||
+    typeof window.ai.summarizer.summarize !== "function"
+  ) {
+    console.error("❌ Chrome AI API for text summarization is unavailable.");
     return null;
   }
 
@@ -62,8 +70,11 @@ export const translateText = async (text, targetLang) => {
     return null;
   }
 
-  // Try to use the Chrome AI translator if available.
-  if (window.ai && window.ai.translator && typeof window.ai.translator.create === "function") {
+  if (
+    window.ai &&
+    window.ai.translator &&
+    typeof window.ai.translator.create === "function"
+  ) {
     const translator = window.ai.translator.create();
     if (translator && typeof translator.translate === "function") {
       try {
@@ -73,39 +84,18 @@ export const translateText = async (text, targetLang) => {
           return response.translation;
         } else {
           console.warn("⚠️ No translation returned from Chrome AI translator.");
+          return null;
         }
       } catch (error) {
         console.error("❌ Error in Chrome AI translator:", error);
+        return null;
       }
     } else {
       console.error("❌ Created translator does not have a translate method.");
+      return null;
     }
   } else {
     console.error("❌ Chrome AI translator API is unavailable.");
-  }
-
-  // Fallback: Use an external API like LibreTranslate.
-  try {
-    const fallbackResponse = await fetch("https://libretranslate.de/translate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        q: text,
-        source: "auto",
-        target: targetLang,
-        format: "text",
-      }),
-    });
-    const data = await fallbackResponse.json();
-    if (data && data.translatedText) {
-      console.log("✅ Fallback Translation Result:", data.translatedText);
-      return data.translatedText;
-    } else {
-      console.warn("⚠️ No translation returned from fallback API.");
-      return null;
-    }
-  } catch (err) {
-    console.error("❌ Error in fallback translation:", err);
     return null;
   }
 };
