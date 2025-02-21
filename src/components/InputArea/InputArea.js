@@ -26,7 +26,8 @@ export default function InputArea({ onSend, error, setError, isLoading }) {
             setInputText(e.target.value);
             setError("");
           }}
-          placeholder="Enter your text here..."
+          placeholder="Hello 👋, type whatever you have in mind in your favorite language...
+"
           aria-label="Text input"
           rows={3}
           onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && handleSubmit()}

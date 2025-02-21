@@ -1,8 +1,7 @@
-// page.js
 "use client";
 import { useState, useEffect } from "react";
 import { FaPaperPlane, FaSpinner } from "react-icons/fa";
-import styles from "@/styles/Home.module.css";
+import styles from "./page.module.css";
 import MessageCard from "../components/MessageCard/MessageCard";
 import InputArea from "../components/InputArea/InputArea";
 import { detectLanguage, summarizeText, translateText } from "../lib/api";
@@ -83,6 +82,15 @@ export default function Home() {
 
   return (
     <main className={styles.container}>
+      {/* Welcome Message Section */}
+      <div className={styles.welcomeSection}>
+        <h1 className={styles.welcomeTitle}>Welcome to AI Text Assistant!</h1>
+        <p className={styles.welcomeSubtitle}>
+          Detect languages, summarize text, and translate instantly with AI.
+        </p>
+      </div>
+
+      {/* Message Display */}
       <div className={styles.messagesContainer}>
         {messages.map((msg) => (
           <MessageCard
@@ -98,6 +106,7 @@ export default function Home() {
         ))}
       </div>
 
+      {/* Input Area */}
       <InputArea
         onSend={handleSend}
         error={error}

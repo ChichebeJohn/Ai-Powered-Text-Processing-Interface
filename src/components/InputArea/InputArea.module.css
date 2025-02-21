@@ -2,19 +2,20 @@
 
 .inputArea {
   padding: 1rem;
-  background: #f9f9f9;
-  border-top: 1px solid #ddd;
+  background: rgba(0, 0, 0, 0.5);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
   position: sticky;
   bottom: 0;
-  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
 }
 
 .errorMessage {
   color: #e74c3c;
   margin-bottom: 0.5rem;
   font-size: 0.9rem;
-  background-color: #fdecea;
-  border: 1px solid #f5c6cb;
+  background-color: rgba(231, 76, 60, 0.2);
+  border: 1px solid rgba(231, 76, 60, 0.5);
   border-radius: 4px;
   padding: 0.5rem;
 }
@@ -28,21 +29,27 @@
 .textarea {
   flex: 1;
   padding: 0.8rem;
-  border: 1px solid #ccc;
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 6px;
   resize: vertical;
-  font-family: inherit;
+  font-family: 'Orbitron', sans-serif;
   font-size: 1rem;
+  background: transparent;
+  color: #fff;
+}
+
+.textarea::placeholder {
+  color: #ccc;
 }
 
 .textarea:focus {
   outline: none;
-  border-color: #3498db;
-  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.25);
+  border-color: #00dbde;
+  box-shadow: 0 0 0 2px rgba(0, 219, 222, 0.25);
 }
 
 .button {
-  background: linear-gradient(45deg, #3498db, #2980b9);
+  background: linear-gradient(45deg, #00dbde, #fc00ff);
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -51,20 +58,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.2s;
+  font-family: 'Orbitron', sans-serif;
 }
 
 .button:hover {
-  background: linear-gradient(45deg, #2980b9, #1c5980);
+  background: linear-gradient(45deg, #fc00ff, #00dbde);
+  transform: scale(1.05);
 }
 
 .button:disabled {
-  background: #95a5a6;
+  background: #555;
   cursor: not-allowed;
 }
 
 .button:focus {
-  outline: 2px solid #2980b9;
+  outline: 2px solid #00dbde;
   outline-offset: 2px;
 }
 
