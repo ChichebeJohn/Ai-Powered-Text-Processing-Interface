@@ -59,9 +59,10 @@ export default function Home() {
         )
       );
 
-      // Auto-translate if the detected language differs from the selected language
+      // Auto-translate if the detected language differs from the selected language.
+      // Pass the detected language as the source.
       if (detectedLang !== selectedLang) {
-        const translation = await translateText(newMessage.text, selectedLang);
+        const translation = await translateText(newMessage.text, detectedLang, selectedLang);
         setMessages((prev) =>
           prev.map((msg) =>
             msg.id === newMessage.id ? { ...msg, translation, isLoading: false } : msg
@@ -69,7 +70,7 @@ export default function Home() {
         );
       }
 
-      // Auto-summarize if the text is long and in English
+      // Auto-summarize if the text is long and in English.
       if (detectedLang === "en" && newMessage.text.length >= 150) {
         const summary = await summarizeText(newMessage.text);
         setMessages((prev) =>

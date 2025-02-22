@@ -103,3 +103,18 @@
     flex: 1;
   }
 }
+
+
+.select {
+  background-color: #333; /* Dark background */
+  color: #fff; /* White text */
+  border: 1px solid #555; /* Optional border */
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+/* Optional: style the options as well */
+.select option {
+  background-color: #333;
+  color: #fff;
+}

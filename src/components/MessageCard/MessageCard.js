@@ -38,7 +38,8 @@ export default function MessageCard({
   const handleTranslate = async () => {
     setIsLoading(true);
     try {
-      const translation = await translateText(message.text, selectedLang);
+      // Pass the detected language as the source language
+      const translation = await translateText(message.text, message.detectedLang, selectedLang);
       setMessages((prev) =>
         prev.map((msg) =>
           msg.id === message.id ? { ...msg, translation } : msg
